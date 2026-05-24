@@ -1,8 +1,8 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #1b1b2f, #162447);
-    color: white;
+    background: white;
+    color: #222;
     min-height: 100vh;
 }
 
@@ -13,14 +13,14 @@ body {
 
 h1 {
     margin-bottom: 10px;
-    color: #ffcc00;
+    color: #222;
     letter-spacing: 2px;
 }
 
 .instructions {
     max-width: 700px;
     margin: 0 auto 15px auto;
-    color: #dcdcdc;
+    color: #444;
 }
 
 .game-info {

@@ -6,9 +6,49 @@
     <title>Document</title>
 
     <link rel="stylesheet" href="style.css">
-    
+
 </head>
 <body>
+
+    <main class="game-container">
+        
+        <header class="game-header">
+            <h1>Monster Mayhem</h1>
+
+            <p class="subtitle">
+                
+            </p>
+        </header>
+        <section class="instructions-card">
+            <h2>How to play</h2>
+
+            <p>
+                Hober over a hexagon to highlight it. Click a hexagon to select it
+                Click the same hexagon again to deselect it.
+            </p>
+        </section>
+
+        <section class="game-info">
+            <div class="info-box">
+                <span class=""info-label>Selected Hexagon</span>
+                <span id="monsterPosition" class="info-value">0, 0</span>
+            </div>
+
+            <button id="resetButton" class="reset-button">
+                Reset game
+            </button>
+        </section>
+
+        <section class="board-area">
+            <section id="board" class="hex-board"></section>
+        </section>
+        
+        <p id="gameMessage" class="game-message">
+            Select a hexagon to begin.
+        </p>
+
+    </main>
     
+    <script src="script.js"></script>
 </body>
 </html>

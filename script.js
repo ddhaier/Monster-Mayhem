@@ -52,7 +52,7 @@ function selectHexagon(hex) {
         hex.classList.remove("selected");
         selectedHex = null;
         selectedHexText.textContent = "None";
-        gameMessage.textContent = "Hexagon deselected.";
+        gameMessage.textContent = "Hexagon deselected. Choose another hexagon to move the monster.";
         return;
     }
 
@@ -63,7 +63,7 @@ function selectHexagon(hex) {
     selectedHex = hex;
     selectedHex.classList.add("selected");
     selectedHexText.textContent = (row + 1) + ", " + (column + 1);
-    gameMessage.textContent = "Selected hexagon: " + (row + 1) + ", " + (column + 1);
+    gameMessage.textContent = "Monster moved to hexagon: " + (row + 1) + ", " + (column + 1);
     moveMonster(row, column);
     }
 
@@ -85,7 +85,7 @@ function selectHexagon(hex) {
         monsterPosition.row = 0;
         monsterPosition.column = 0;
         placeMonster();
-        
+
         gameMessage.textContent = "Game reset. Select a hexagon to begin.";
     }
 

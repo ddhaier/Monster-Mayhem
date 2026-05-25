@@ -1,8 +1,8 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: white;
-    color: #222;
+    background: linear-gradient(135deg, #f4f8ff, #e8f0ff);
+    color: #1f2937;
     min-height: 100vh;
 }
 
@@ -21,9 +21,10 @@ body {
 
 h1 {
     margin-bottom: 8px;
-    color: #222;
+    color: #25316d;
     letter-spacing: 2px;
-    font-size: 42px;
+    font-size: 46px;
+    text-shadow: 1px 1px 0 #ffffff;
 }
 
 .subtitle {
@@ -47,11 +48,15 @@ h1 {
     margin-bottom: 8px;
 }
 
-.instructions-card p {
-    margin-bottom: 0;
-    line-height: 1.5;
+.instructions-card {
+    max-width: 700px;
+    margin: 0 auto 20px auto;
+    padding: 15px 20px;
+    background-color: #ffffff;
+    border: 2px solid #b8c7ff;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(37, 49, 109, 0.08);
 }
-
 /* Game information area */
 .game-info {
     display: flex;
@@ -66,9 +71,10 @@ h1 {
 .info-box {
     min-width: 160px;
     padding: 12px 16px;
-    background-color: #f8f8f8;
-    border: 2px solid #ddd;
-    border-radius: 10px;
+    background-color: #ffffff;
+    border: 2px solid #b8c7ff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(37, 49, 109, 0.06);
 }
 
 .info-label {
@@ -85,19 +91,36 @@ h1 {
     color: #222;
 }
 
+/* Board area */
+.board-area {
+    width: fit-content;
+    margin: 15px auto;
+    padding: 8px 22px 30px 22px;
+    background-color: #ffffff;
+    border: 3px solid #b8c7ff;
+    border-radius: 18px;
+    overflow: visible;
+    box-shadow: 0 6px 16px rgba(37, 49, 109, 0.10);
+}
+
+
 /* Reset button */
 .reset-button {
-    padding: 12px 18px;
-    background-color: #222;
+    padding: 14px 24px;
+    background-color: #5f4bb6;
     color: white;
     border: none;
-    border-radius: 10px;
+    border-radius: 12px;
     font-weight: bold;
+    font-size: 16px;
     cursor: pointer;
+    box-shadow: 0 4px 0 #3f3280;
+    transition: 0.2s;
 }
 
 .reset-button:hover {
-    background-color: #444;
+    background-color: #7464d8;
+    transform: translateY(-2px);
 }
 
 /* Board area */
@@ -119,8 +142,15 @@ h1 {
 
 /* Message below the board */
 .game-message {
+    width: fit-content;
+    margin: 18px auto 0 auto;
+    padding: 10px 18px;
+    background-color: #ffffff;
+    border: 2px solid #b8c7ff;
+    border-radius: 12px;
     font-weight: bold;
-    color: #555;
+    color: #25316d;
+    box-shadow: 0 4px 10px rgba(37, 49, 109, 0.06);
 }
 
 :root {
@@ -144,8 +174,8 @@ h1 {
 }
 
 .hex.selected {
-    background-color: #ff8c42;
-    filter: brightness(1.05);
+    background-color: #7b2ff7;
+    filter: brightness(1.08);
     transform: scale(1.08);
     z-index: 3;
 }
@@ -159,7 +189,7 @@ h1 {
 .hex {
     width: var(--hex-width);
     height: var(--hex-height);
-    background-color: #7cc576;
+    background-color: #8bb6d6;
     margin-right: var(--hex-gap);
 
     clip-path: polygon(

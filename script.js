@@ -1,6 +1,7 @@
 //Get elements from the HTML
 const board = document.getElementById("board");
 const gameMessage = document.getElementById("gameMessage");
+const resetButton = document.getElementById("resetButton");
 
 // Board size
 const rows = 10;
@@ -57,7 +58,19 @@ function selectHexagon(hex) {
     selectedHex.classList.add("selected");
     selectedHexText.textContent = row + ", " + column;
     gameMessage.textContent = "Selected hexagon: " + row + ", " + column;
-}
+    }
+
+    function resetGame() {
+        if (selectedHex !== null) {
+        selectedHex.classList.remove("selected");
+        }
+
+    selectedHex = null;
+    selectedHexText.textContent = "None";
+    gameMessage.textContent = "Game reset. Select a hexagon to begin.";
+    }
+
+resetButton.addEventListener("click", resetGame);
 
 //Start the game board
 createBoard();

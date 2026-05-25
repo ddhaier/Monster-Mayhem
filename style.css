@@ -102,12 +102,13 @@ h1 {
 
 /* Board area */
 .board-area {
-    margin: 25px auto;
-    padding: 20px;
+    width: fit-content;
+    margin: 15px auto;
+    padding: 8px 22px 30px 22px;
     background-color: #fafafa;
     border: 2px solid #ddd;
     border-radius: 14px;
-    overflow-x: auto;
+    overflow: visible;
 }
 
 /* The board itself */
@@ -122,23 +123,31 @@ h1 {
     color: #555;
 }
 
+:root {
+    --hex-width: 52px;
+    --hex-height: 58px;
+    --hex-gap: 4px;
+    --row-height: 46px;
+    --row-offset: 28px;
+}
+
 /* Each row of the hexagon board */
 .hex-row {
     display: flex;
-    height: 52px;
+    height: var(--row-height);
 }
 
 /* Move every second row to the right to create the hexagon grid pattern */
 .hex-row:nth-child(even) {
-    margin-left: 45px;
+    margin-left: var(--row-offset);
 }
 
 /* Basic hexagon shape */
 .hex {
-    width: 90px;
-    height: 100px;
+    width: var(--hex-width);
+    height: var(--hex-height);
     background-color: #7cc576;
-    margin-right: 2px;
+    margin-right: var(--hex-gap);
 
     clip-path: polygon(
         50% 0%,

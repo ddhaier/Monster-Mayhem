@@ -121,3 +121,40 @@ h1 {
     font-weight: bold;
     color: #555;
 }
+
+/* Each row of the hexagon board */
+.hex-row {
+    display: flex;
+    height: 52px;
+}
+
+/* Move every second row to the right to create the hexagon grid pattern */
+.hex-row:nth-child(even) {
+    margin-left: 45px;
+}
+
+/* Basic hexagon shape */
+.hex {
+    width: 90px;
+    height: 100px;
+    background-color: #7cc576;
+    margin-right: 2px;
+
+    clip-path: polygon(
+        50% 0%,
+        100% 25%,
+        100% 75%,
+        50% 100%,
+        0% 75%,
+        0% 25%
+    );
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+    transition: 0.2s;
+    position: relative;
+    font-size: 22px;
+}

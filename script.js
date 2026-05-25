@@ -41,7 +41,7 @@ function createBoard() {
     }
 
     gameMessage.textContent = "The 10x10 hexagon board has been created.";
-
+    placeMonster();
 }
 
 function selectHexagon(hex) {
@@ -64,6 +64,14 @@ function selectHexagon(hex) {
     selectedHex.classList.add("selected");
     selectedHexText.textContent = (row + 1) + ", " + (column + 1);
     gameMessage.textContent = "Selected hexagon: " + (row + 1) + ", " + (column + 1);
+    moveMonster(row, column);
+    }
+
+    function moveMonster(row, column) {
+    monsterPosition.row = row;
+    monsterPosition.column = column;
+
+    placeMonster();
     }
 
     function resetGame() {
@@ -76,7 +84,28 @@ function selectHexagon(hex) {
     gameMessage.textContent = "Game reset. Select a hexagon to begin.";
     }
 
+    function placeMonster() {
+    const allHexagons = document.querySelectorAll(".hex");
+
+    allHexagons.forEach(function (hex) {
+        hex.innerHTML = "";
+
+        const row = Number(hex.dataset.row);
+        const column = Number(hex.dataset.column);
+
+        if (row === monsterPosition.row && column === monsterPosition.column) {
+            const monster = document.createElement("span");
+            monster.classList.add("monster");
+            monster.textContent = "👾";
+            hex.appendChild(monster);
+        }
+    });
+
+    monsterPositionText.textContent = (monsterPosition.row + 1) + ", " + (monsterPosition.column + 1);
+}
+
 resetButton.addEventListener("click", resetGame);
 
 //Start the game board
 createBoard();
+

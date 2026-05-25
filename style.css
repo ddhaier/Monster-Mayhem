@@ -198,3 +198,8 @@ h1 {
         font-size: 18px;
     }
 }
+
+.monster {
+    font-size: 24px;
+    pointer-events: none;
+}

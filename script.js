@@ -2,6 +2,7 @@
 const board = document.getElementById("board");
 const gameMessage = document.getElementById("gameMessage");
 const resetButton = document.getElementById("resetButton");
+const monsterPositionText = document.getElementById("monsterPosition");
 
 // Board size
 const rows = 10;
@@ -9,6 +10,11 @@ const columns = 10;
 
 let selectedHex = null;
 const selectedHexText = document.getElementById("selectedHex");
+
+let monsterPosition = {
+    row: 0,
+    column: 0
+};
 
 //This function creates the full board
 function createBoard() {
@@ -56,8 +62,8 @@ function selectHexagon(hex) {
 
     selectedHex = hex;
     selectedHex.classList.add("selected");
-    selectedHexText.textContent = row + ", " + column;
-    gameMessage.textContent = "Selected hexagon: " + row + ", " + column;
+    selectedHexText.textContent = (row + 1) + ", " + (column + 1);
+    gameMessage.textContent = "Selected hexagon: " + (row + 1) + ", " + (column + 1);
     }
 
     function resetGame() {

@@ -79,9 +79,14 @@ function selectHexagon(hex) {
         selectedHex.classList.remove("selected");
         }
 
-    selectedHex = null;
-    selectedHexText.textContent = "None";
-    gameMessage.textContent = "Game reset. Select a hexagon to begin.";
+        selectedHex = null;
+        selectedHexText.textContent = "None";
+
+        monsterPosition.row = 0;
+        monsterPosition.column = 0;
+        placeMonster();
+        
+        gameMessage.textContent = "Game reset. Select a hexagon to begin.";
     }
 
     function placeMonster() {

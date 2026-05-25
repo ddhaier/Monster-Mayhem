@@ -137,6 +137,12 @@ h1 {
     height: var(--row-height);
 }
 
+.hex:hover {
+    background-color: #f4d35e;
+    transform: scale(1.05);
+    z-index: 2;
+}
+
 /* Move every second row to the right to create the hexagon grid pattern */
 .hex-row:nth-child(even) {
     margin-left: var(--row-offset);

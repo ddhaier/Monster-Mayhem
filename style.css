@@ -143,6 +143,13 @@ h1 {
     z-index: 2;
 }
 
+.hex.selected {
+    background-color: #e76f51;
+    box-shadow: 0 0 0 3px #222 inset;
+    transform: scale(1.05);
+    z-index: 3;
+}
+
 /* Move every second row to the right to create the hexagon grid pattern */
 .hex-row:nth-child(even) {
     margin-left: var(--row-offset);

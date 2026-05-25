@@ -6,6 +6,9 @@ const gameMessage = document.getElementById("gameMessage");
 const rows = 10;
 const columns = 10;
 
+let selectedHex = null;
+const selectedHexText = document.getElementById("selectedHex");
+
 //This function creates the full board
 function createBoard() {
     for (let row = 0; row < rows; row++) {
@@ -19,6 +22,10 @@ function createBoard() {
             hex.dataset.row = row;
             hex.dataset.column = column;
 
+            hex.addEventListener("click", function () {
+                selectHexagon(hex);
+            });
+
             rowElement.appendChild(hex);
         }
 
@@ -28,6 +35,28 @@ function createBoard() {
 
     gameMessage.textContent = "The 10x10 hexagon board has been created.";
 
+}
+
+function selectHexagon(hex) {
+    const row = Number(hex.dataset.row);
+    const column = Number(hex.dataset.column);
+
+    if (selectedHex === hex) {
+        hex.classList.remove("selected");
+        selectedHex = null;
+        selectedHexText.textContent = "None";
+        gameMessage.textContent = "Hexagon deselected.";
+        return;
+    }
+
+    if (selectedHex !== null) {
+        selectedHex.classList.remove("selected");
+    }
+
+    selectedHex = hex;
+    selectedHex.classList.add("selected");
+    selectedHexText.textContent = row + ", " + column;
+    gameMessage.textContent = "Selected hexagon: " + row + ", " + column;
 }
 
 //Start the game board

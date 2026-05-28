@@ -211,6 +211,29 @@ h1 {
     font-size: 22px;
 }
 
+.hex.trail {
+    animation: fadeTrail 1.2s ease-out;
+}
+
+@keyframes fadeTrail {
+    0% {
+        background-color: #8b5cf6;
+        transform: scale(1.05);
+        filter: brightness(1.15);
+    }
+
+    50% {
+        background-color: #a78bfa;
+        transform: scale(1.02);
+    }
+
+    100% {
+        background-color: var(--hex-color);
+        transform: scale(1);
+        filter: brightness(1);
+    }
+}
+
 @media (max-width: 800px) {
     :root {
         --hex-width: 38px;

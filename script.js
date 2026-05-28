@@ -48,46 +48,56 @@ function selectHexagon(hex) {
     const row = Number(hex.dataset.row);
     const column = Number(hex.dataset.column);
 
-    if (selectedHex === hex) {
-        hex.classList.remove("selected");
-        selectedHex = null;
-        selectedHexText.textContent = "None";
-        gameMessage.textContent = "Hexagon deselected. Choose another hexagon to move the monster.";
+    if (row === monsterPosition.row && column === monsterPosition.column) {
+        gameMessage.textContent = "The monster is already on this hexagon.";
         return;
     }
 
+    if (!isNearbyHexagon(row, column)) {
+        gameMessage.textContent = "The monster can only move to a nearby hexagon.";
+        return;
+    }
+
+    
     if (selectedHex !== null) {
         selectedHex.classList.remove("selected");
     }
 
-    selectedHex = hex;
+    const previousMonsterHex = getHexagon(monsterPosition.row, monsterPosition.column);
+
+     selectedHex = hex;
     selectedHex.classList.add("selected");
     selectedHexText.textContent = (row + 1) + ", " + (column + 1);
-    gameMessage.textContent = "Monster moved to hexagon: " + (row + 1) + ", " + (column + 1);
-    moveMonster(row, column);
-    }
+    gameMessage.textContent = "Monster moved one step to hexagon: " + (row + 1) + ", " + (column + 1);
 
-    function moveMonster(row, column) {
+    moveMonster(row, column, previousMonsterHex);
+}
+
+    function isNearbyHexagon(row, column) {
+    const rowDifference = Math.abs(row - monsterPosition.row);
+    const columnDifference = Math.abs(column - monsterPosition.column);
+
+    return rowDifference <= 1 && columnDifference <= 1;
+}
+
+    function getHexagon(row, column) {
+    return document.querySelector(
+        '.hex[data-row="' + row + '"][data-column="' + column + '"]'
+    );
+}
+
+    function moveMonster(row, column, previousMonsterHex) {
     monsterPosition.row = row;
     monsterPosition.column = column;
 
+        if (previousMonsterHex !== null) {
+        previousMonsterHex.classList.remove("trail");
+        void previousMonsterHex.offsetWidth;
+        previousMonsterHex.classList.add("trail");
+    }
+     
     placeMonster();
-    }
-
-    function resetGame() {
-        if (selectedHex !== null) {
-        selectedHex.classList.remove("selected");
-        }
-
-        selectedHex = null;
-        selectedHexText.textContent = "None";
-
-        monsterPosition.row = 0;
-        monsterPosition.column = 0;
-        placeMonster();
-
-        gameMessage.textContent = "Game reset. Select a hexagon to begin.";
-    }
+}
 
     function placeMonster() {
     const allHexagons = document.querySelectorAll(".hex");
@@ -107,6 +117,26 @@ function selectHexagon(hex) {
     });
 
     monsterPositionText.textContent = (monsterPosition.row + 1) + ", " + (monsterPosition.column + 1);
+}
+
+    function resetGame() {
+    if (selectedHex !== null) {
+        selectedHex.classList.remove("selected");
+    }
+
+    document.querySelectorAll(".hex").forEach(function(hex) {
+        hex.classList.remove("trail");
+    });
+
+    selectedHex = null;
+    monsterPosition.row = 0;
+    monsterPosition.column = 0;
+
+    selectedHexText.textContent = "None";
+    monsterPositionText.textContent = "1, 1";
+    gameMessage.textContent = "Select a hexagon to begin.";
+
+    placeMonster();
 }
 
 resetButton.addEventListener("click", resetGame);

@@ -138,6 +138,8 @@ h1 {
 .hex-board {
     width: fit-content;
     margin: 0 auto;
+    position: relative;
+    overflow: visible;
 }
 
 /* Message below the board */
@@ -191,6 +193,7 @@ h1 {
     height: var(--hex-height);
     background-color: #8bb6d6;
     margin-right: var(--hex-gap);
+    z-index: 1;
 
     clip-path: polygon(
         50% 0%,
@@ -255,4 +258,53 @@ h1 {
 .monster {
     font-size: 24px;
     pointer-events: none;
+}
+
+.cloud-message {
+    position: fixed;
+    background-color: #ffffff;
+    color: #4c1d95;
+    padding: 6px 10px;
+    border-radius: 14px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    box-shadow: 0 4px 10px rgba(76, 29, 149, 0.25);
+    pointer-events: none;
+    transform: translate(-50%, -100%);
+    animation: cloudFade 2s ease-out forwards;
+    z-index: 9999;
+    white-space: nowrap;
+}
+
+.cloud-message::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -6px;
+    transform: translateX(-50%);
+    border-width: 6px 6px 0 6px;
+    border-style: solid;
+    border-color: #ffffff transparent transparent transparent;
+}
+
+@keyframes cloudFade {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -80%);
+    }
+
+    15% {
+        opacity: 1;
+        transform: translate(-50%, -100%);
+    }
+
+    80% {
+        opacity: 1;
+        transform: translate(-50%, -100%);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -120%);
+    }
 }

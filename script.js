@@ -77,12 +77,12 @@ function selectHexagon(hex) {
     const column = Number(hex.dataset.column);
 
     if (row === monsterPosition.row && column === monsterPosition.column) {
-        gameMessage.textContent = "The monster is already on this hexagon.";
+        gameMessage.textContent = "The Ghost is already on this hexagon.";
         return;
     }
 
     if (!isNearbyHexagon(row, column)) {
-        showTemporaryMessage("Move one step");
+        showTemporaryMessage("Too far! The ghost can only move one hexagon at a time.");
         playErrorSound();
     return;
 }
@@ -97,7 +97,7 @@ function selectHexagon(hex) {
      selectedHex = hex;
     selectedHex.classList.add("selected");
     selectedHexText.textContent = (row + 1) + ", " + (column + 1);
-    gameMessage.textContent = "Monster moved one step to hexagon: " + (row + 1) + ", " + (column + 1);
+    gameMessage.textContent = `Ghost moved to hexagon ${row}, ${column}!`;
     playJumpSound();
 
     moveMonster(row, column, previousMonsterHex);
@@ -141,7 +141,7 @@ function selectHexagon(hex) {
         if (row === monsterPosition.row && column === monsterPosition.column) {
             const monster = document.createElement("span");
             monster.classList.add("monster");
-            monster.textContent = "👾";
+            monster.textContent = "👻";
             hex.appendChild(monster);
         }
     });
@@ -177,62 +177,83 @@ createBoard();
 // --- AUDIO ---
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-function playJumpSound() {
+function playGhostMoveSound() {
+    // Creates a short ghost sound when the player makes a valid move
     const oscillator = audioCtx.createOscillator();
     const gainNode = audioCtx.createGain();
 
+    // Connects the sound generator to the volume control and then to the speakers
     oscillator.connect(gainNode);
     gainNode.connect(audioCtx.destination);
 
-    // Square wave gives the classic 8-bit videogame tone
-    oscillator.type = "square";
+    // Uses a sine wave to make the sound softer and more ghost-like
+    oscillator.type = "sine";
 
     const now = audioCtx.currentTime;
-    // Start low and ramp up quickly to create the Mario-style boing
-    oscillator.frequency.setValueAtTime(200, now);
-    oscillator.frequency.exponentialRampToValueAtTime(600, now + 0.12);
 
-    // Start at moderate volume and fade out sharply
-    gainNode.gain.setValueAtTime(0.3, now);
-    gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+    // Changes the pitch during the sound to create a "woo" effect
+    oscillator.frequency.setValueAtTime(380, now);
+    oscillator.frequency.exponentialRampToValueAtTime(520, now + 0.18);
+    oscillator.frequency.exponentialRampToValueAtTime(300, now + 0.40);
 
+    // Controls the volume so the sound fades in and fades out smoothly
+    gainNode.gain.setValueAtTime(0.0, now);
+    gainNode.gain.linearRampToValueAtTime(0.16, now + 0.04);
+    gainNode.gain.linearRampToValueAtTime(0.08, now + 0.28);
+    gainNode.gain.linearRampToValueAtTime(0.0, now + 0.45);
+
+    // Starts and stops the sound
     oscillator.start(now);
-    oscillator.stop(now + 0.2);
+    oscillator.stop(now + 0.45);
 }
 
 function playErrorSound() {
-    // Mario death jingle - sequence of notes matching the classic tune
-    const notes = [
-        { freq: 494, time: 0.00, duration: 0.10 },
-        { freq: 392, time: 0.14, duration: 0.10 },
-        { freq: 196, time: 0.28, duration: 0.12 },
-        { freq: 220, time: 0.44, duration: 0.12 },
-        { freq: 247, time: 0.60, duration: 0.12 },
-        { freq: 196, time: 0.80, duration: 0.20 },
-        { freq: 147, time: 1.10, duration: 0.40 }
-    ];
+    // Creates a longer ghost sound when the player tries to move too far
+    const oscillator = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
 
-    notes.forEach(function(note) {
-        const oscillator = audioCtx.createOscillator();
-        const gainNode = audioCtx.createGain();
+    // Connects the sound generator to the volume control and then to the speakers
+    oscillator.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
 
-        oscillator.connect(gainNode);
-        gainNode.connect(audioCtx.destination);
+    // Uses a sine wave to keep the sound smooth and ghost-like
+    oscillator.type = "sine";
 
-        // Square wave for the classic NES/8-bit sound
-        oscillator.type = "square";
+    const now = audioCtx.currentTime;
 
-        const now = audioCtx.currentTime + note.time;
-        oscillator.frequency.setValueAtTime(note.freq, now);
+    // Drops the pitch to create the feeling of the ghost flying away
+    oscillator.frequency.setValueAtTime(650, now);
+    oscillator.frequency.exponentialRampToValueAtTime(420, now + 0.20);
+    oscillator.frequency.exponentialRampToValueAtTime(180, now + 0.65);
+    oscillator.frequency.exponentialRampToValueAtTime(90, now + 1.00);
 
-        // Short attack, hold, then cut off cleanly
-        gainNode.gain.setValueAtTime(0.0, now);
-        gainNode.gain.linearRampToValueAtTime(0.25, now + 0.01);
-        gainNode.gain.setValueAtTime(0.25, now + note.duration - 0.01);
-        gainNode.gain.linearRampToValueAtTime(0.0, now + note.duration);
+    // Controls the volume so the sound starts softly and fades out
+    gainNode.gain.setValueAtTime(0.0, now);
+    gainNode.gain.linearRampToValueAtTime(0.18, now + 0.05);
+    gainNode.gain.linearRampToValueAtTime(0.12, now + 0.45);
+    gainNode.gain.linearRampToValueAtTime(0.0, now + 1.05);
 
-        oscillator.start(now);
-        oscillator.stop(now + note.duration);
-    });
+    // Starts and stops the sound
+    oscillator.start(now);
+    oscillator.stop(now + 1.05);
 }
-// --- END AUDIO ---
+
+if (!isOneStepAway(hex)) {
+    // If the clicked hexagon is too far away, the ghost does not move
+    playErrorSound();
+
+    // Shows a short warning message to explain the movement rule
+    showTemporaryMessage("Too far! The ghost can only move one hexagon at a time.");
+
+    // Stops the function so the position is not updated
+    return;
+}
+// Updates the ghost position after a valid move
+monsterPosition.row = Number(hex.dataset.row);
+monsterPosition.column = Number(hex.dataset.column);
+
+// Places the ghost on the new hexagon
+placeMonster();
+
+// Plays a short ghost sound to give feedback for a valid move
+playGhostMoveSound();

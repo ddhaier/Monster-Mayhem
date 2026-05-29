@@ -48,7 +48,8 @@ function createBoard() {
 
 function showTemporaryMessage(message) {
     const currentMonsterHex = getHexagon(monsterPosition.row, monsterPosition.column);
-    if (!currentMonsterHex) return;
+    if (!currentMonsterHex) 
+    return;
 
     const oldCloudMessage = document.querySelector(".cloud-message");
     if (oldCloudMessage !== null) {
@@ -84,7 +85,7 @@ function selectHexagon(hex) {
     if (!isNearbyHexagon(row, column)) {
         showTemporaryMessage("Too far! The ghost can only move one hexagon at a time.");
         playErrorSound();
-    return;
+        return;
 }
 
     
@@ -94,11 +95,11 @@ function selectHexagon(hex) {
 
     const previousMonsterHex = getHexagon(monsterPosition.row, monsterPosition.column);
 
-     selectedHex = hex;
+    selectedHex = hex;
     selectedHex.classList.add("selected");
     selectedHexText.textContent = (row + 1) + ", " + (column + 1);
-    gameMessage.textContent = `Ghost moved to hexagon ${row}, ${column}!`;
-    playJumpSound();
+    gameMessage.textContent = `Ghost moved to hexagon ${row + 1}, ${column + 1}!`;
+    playGhostMoveSound()
 
     moveMonster(row, column, previousMonsterHex);
 }
@@ -111,7 +112,7 @@ function selectHexagon(hex) {
 }
 
     function getHexagon(row, column) {
-    return document.querySelector(
+        return document.querySelector(
         '.hex[data-row="' + row + '"][data-column="' + column + '"]'
     );
 }
@@ -236,17 +237,6 @@ function playErrorSound() {
     // Starts and stops the sound
     oscillator.start(now);
     oscillator.stop(now + 1.05);
-}
-
-if (!isOneStepAway(hex)) {
-    // If the clicked hexagon is too far away, the ghost does not move
-    playErrorSound();
-
-    // Shows a short warning message to explain the movement rule
-    showTemporaryMessage("Too far! The ghost can only move one hexagon at a time.");
-
-    // Stops the function so the position is not updated
-    return;
 }
 // Updates the ghost position after a valid move
 monsterPosition.row = Number(hex.dataset.row);

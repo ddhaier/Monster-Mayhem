@@ -33,16 +33,6 @@ h1 {
     font-size: 18px;
 }
 
-/* Instructions card */
-.instructions-card {
-    max-width: 700px;
-    margin: 0 auto 20px auto;
-    padding: 15px 20px;
-    background-color: #f4f4f4;
-    border: 2px solid #ddd;
-    border-radius: 12px;
-}
-
 .instructions-card h2 {
     margin-top: 0;
     margin-bottom: 8px;
@@ -90,19 +80,6 @@ h1 {
     font-weight: bold;
     color: #222;
 }
-
-/* Board area */
-.board-area {
-    width: fit-content;
-    margin: 15px auto;
-    padding: 8px 22px 30px 22px;
-    background-color: #ffffff;
-    border: 3px solid #b8c7ff;
-    border-radius: 18px;
-    overflow: visible;
-    box-shadow: 0 6px 16px rgba(37, 49, 109, 0.10);
-}
-
 
 /* Reset button */
 .reset-button {
@@ -231,7 +208,7 @@ h1 {
     }
 
     100% {
-        background-color: var(--hex-color);
+        background-color: var(#8bb6d6);
         transform: scale(1);
         filter: brightness(1);
     }

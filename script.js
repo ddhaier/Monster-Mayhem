@@ -41,8 +41,6 @@ function createBoard() {
         board.appendChild(rowElement);
 
     }
-
-    gameMessage.textContent = "The 10x10 hexagon board has been created.";
     placeMonster();
 }
 
@@ -238,12 +236,3 @@ function playErrorSound() {
     oscillator.start(now);
     oscillator.stop(now + 1.05);
 }
-// Updates the ghost position after a valid move
-monsterPosition.row = Number(hex.dataset.row);
-monsterPosition.column = Number(hex.dataset.column);
-
-// Places the ghost on the new hexagon
-placeMonster();
-
-// Plays a short ghost sound to give feedback for a valid move
-playGhostMoveSound();
